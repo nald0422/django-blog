@@ -11,12 +11,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Blog
 from .serializers import BlogSerializer
 
+from .permissions import IsOwnerOrReadOnly
+
 # Create your views here.
 
 
 class BlogView(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class = BlogSerializer
 
     filter_fields =  ["author", "title"]
